@@ -71,6 +71,16 @@ RSpec.describe GamesController, type: :controller do
       expect(response).to redirect_to(game_path(game))
       expect(flash.empty?).to be_truthy # удачный ответ не заполняет flash
     end
+
+    it '#show another user game' do
+      other_game = FactoryBot.create(:game_with_questions)
+
+      get :show, id: other_game.id
+
+      expect(response.status).not_to eq(200)
+      expect(response).to redirect_to(root_path)
+      expect(flash[:alert]).to be
+    end
   end
 end
 

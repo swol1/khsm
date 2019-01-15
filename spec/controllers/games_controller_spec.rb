@@ -26,6 +26,17 @@ RSpec.describe GamesController, type: :controller do
       expect(response).to redirect_to(new_user_session_path) # devise должен отправить на логин
       expect(flash[:alert]).to be # во flash должен быть прописана ошибка
     end
+
+    it 'not allowed to #create' do
+      expect { post :create }.to change(Game, :count).by(0)
+
+      post :create
+      game = assigns(:game)
+
+      expect(game).to be_nil
+      expect(response.status).not_to eq(200)
+      expect(flash[:alert]).to be
+    end
   end
 
   # группа тестов на экшены контроллера, доступных залогиненным юзерам
@@ -72,13 +83,41 @@ RSpec.describe GamesController, type: :controller do
       expect(flash.empty?).to be_truthy # удачный ответ не заполняет flash
     end
 
-    it '#show another user game' do
+    it '#show someone elses game' do
       other_game = FactoryBot.create(:game_with_questions)
 
       get :show, id: other_game.id
 
       expect(response.status).not_to eq(200)
       expect(response).to redirect_to(root_path)
+      expect(flash[:alert]).to be
+    end
+
+    it 'user .take_money!' do
+      game_w_questions.update_attribute(:current_level, 2)
+
+      put :take_money, id: game_w_questions.id
+      game = assigns(:game)
+
+      expect(game.finished?).to be_truthy
+      expect(game.prize).to eq(200)
+
+      user.reload
+      expect(user.balance).to eq(200)
+
+      expect(response).to redirect_to(user_path(user))
+      expect(flash[:warning]).to be
+    end
+
+    it 'create second game' do
+      expect(game_w_questions.finished?).to be_falsey
+
+      expect { post :create }.to change(Game, :count).by(0)
+
+      game = assigns(:game)
+      expect(game).to be_nil
+
+      expect(response).to redirect_to(game_path(game_w_questions))
       expect(flash[:alert]).to be
     end
   end

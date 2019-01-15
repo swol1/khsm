@@ -140,6 +140,7 @@ RSpec.describe Game, type: :model do
         game_w_questions.current_level = Question::QUESTION_LEVELS.max
         game_w_questions.answer_current_question!(:d)
 
+        expect(game_w_questions.prize).to eq(1000000)
         expect(game_w_questions.status).to eq(:won)
         expect(game_w_questions.finished_at).to be_present
         expect(game_w_questions.finished?).to be true
@@ -169,7 +170,7 @@ RSpec.describe Game, type: :model do
       end
 
       it 'final question' do
-        game_w_questions.current_level = 14
+        game_w_questions.current_level = Question::QUESTION_LEVELS.max
         game_w_questions.answer_current_question!(:a)
 
         expect(game_w_questions.prize).to eq(32000)

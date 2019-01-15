@@ -122,9 +122,12 @@ RSpec.describe GamesController, type: :controller do
     end
 
     it 'wrong answer' do
-      put :answer
-      answer_is_correct = assigns(false)
+      put :answer, id: game_w_questions.id, letter: game_w_questions.answer_current_question!(:a)
+      game = assigns(:game)
 
+      expect(game.finished?).to be true
+      expect(game.current_level).to be 0
+      expect(response).to redirect_to(user_path(user))
       expect(flash[:alert]).to be
     end
   end

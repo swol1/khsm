@@ -146,7 +146,7 @@ RSpec.describe Game, type: :model do
         expect(game_w_questions.finished?).to be true
       end
 
-      it 'after timebank' do
+      it 'doesnt accept answer exceeded time limit' do
         game_w_questions.created_at = 1.hour.ago
         game_w_questions.answer_current_question!(:d)
 
@@ -169,23 +169,13 @@ RSpec.describe Game, type: :model do
         expect(game_w_questions.finished?).to be true
       end
 
-      it 'final question' do
-        game_w_questions.current_level = Question::QUESTION_LEVELS.max
-        game_w_questions.answer_current_question!(:a)
-
-        expect(game_w_questions.prize).to eq(32000)
-        expect(game_w_questions.current_level).to eq(14)
-        expect(game_w_questions.status).to eq(:fail)
-        expect(game_w_questions.finished_at).to be_present
-        expect(game_w_questions.finished?).to be true
-      end
-
-      it 'after timebank' do
+      it 'timeout time limit exceeded' do
         game_w_questions.created_at = 1.hour.ago
         game_w_questions.answer_current_question!(:a)
 
         expect(game_w_questions.answer_current_question!(:a)).to be false
         expect(game_w_questions.current_level).to eq(10)
+        expect(game_w_questions.prize).to eq(32000)
         expect(game_w_questions.status).to eq(:timeout)
         expect(game_w_questions.finished_at).to be_present
         expect(game_w_questions.finished?).to be true

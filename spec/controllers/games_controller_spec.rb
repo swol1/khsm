@@ -35,6 +35,33 @@ RSpec.describe GamesController, type: :controller do
 
       expect(game).to be_nil
       expect(response.status).not_to eq(200)
+      expect(response).to redirect_to(new_user_session_path)
+      expect(flash[:alert]).to be
+    end
+
+    it 'not allowed to #answer' do
+      put :answer, id: game_w_questions.id, letter: game_w_questions.current_game_question.correct_answer_key
+      game = assigns(:game)
+
+      expect(response.status).not_to eq(200)
+      expect(game).to be_nil
+      expect(response).to redirect_to(new_user_session_path)
+      expect(flash[:alert]).to be
+    end
+
+    it 'not allowed to #take_money' do
+      game_w_questions.update_attribute(:current_level, 2)
+
+      put :take_money, id: game_w_questions.id
+      game = assigns(:game)
+
+      expect(game).to be_nil
+
+      user.reload
+      expect(user.balance).to eq(0)
+
+      expect(response.status).not_to eq(200)
+      expect(response).to redirect_to(new_user_session_path)
       expect(flash[:alert]).to be
     end
   end
@@ -93,7 +120,7 @@ RSpec.describe GamesController, type: :controller do
       expect(flash[:alert]).to be
     end
 
-    it 'user .take_money!' do
+    it 'user #take_money!' do
       game_w_questions.update_attribute(:current_level, 2)
 
       put :take_money, id: game_w_questions.id

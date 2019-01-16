@@ -30,7 +30,6 @@ RSpec.describe GamesController, type: :controller do
     it 'not allowed to #create' do
       expect { post :create }.to change(Game, :count).by(0)
 
-      post :create
       game = assigns(:game)
 
       expect(game).to be_nil
@@ -56,10 +55,6 @@ RSpec.describe GamesController, type: :controller do
       game = assigns(:game)
 
       expect(game).to be_nil
-
-      user.reload
-      expect(user.balance).to eq(0)
-
       expect(response.status).not_to eq(200)
       expect(response).to redirect_to(new_user_session_path)
       expect(flash[:alert]).to be

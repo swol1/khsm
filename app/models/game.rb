@@ -64,7 +64,7 @@ class Game < ActiveRecord::Base
     if current_game_question.answer_correct?(letter)
       self.current_level += 1
 
-      if current_level == Question::QUESTION_LEVELS.max
+      if current_level == Question::QUESTION_LEVELS.max + 1
         finish_game!(PRIZES[Question::QUESTION_LEVELS.max], false)
       else
         save!

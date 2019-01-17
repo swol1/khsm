@@ -150,6 +150,7 @@ RSpec.describe GamesController, type: :controller do
       expect(game.finished?).to be true
       expect(game.current_level).to be 0
       expect(response).to redirect_to(user_path(user))
+      expect(response.status).not_to eq(200)
       expect(flash[:alert]).to be
     end
 

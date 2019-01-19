@@ -11,7 +11,7 @@ RSpec.describe GamesController, type: :controller do
   # обычный пользователь
   let(:user) { FactoryBot.create(:user) }
   # админ
-  let(:admin) { FactoryGirl.create(:user, is_admin: true) }
+  let(:admin) { FactoryBot.create(:user, is_admin: true) }
   # игра с прописанными игровыми вопросами
   let(:game_w_questions) { FactoryBot.create(:game_with_questions, user: user) }
 

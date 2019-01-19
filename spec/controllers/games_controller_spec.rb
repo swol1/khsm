@@ -143,15 +143,17 @@ RSpec.describe GamesController, type: :controller do
       expect(flash[:alert]).to be
     end
 
-    it 'wrong answer' do
-      put :answer, id: game_w_questions.id, letter: game_w_questions.answer_current_question!(:a)
-      game = assigns(:game)
+    context 'answers wrong' do
+      it 'regular question' do
+        put :answer, id: game_w_questions.id, letter: game_w_questions.answer_current_question!(:a)
+        game = assigns(:game)
 
-      expect(game.finished?).to be true
-      expect(game.current_level).to be 0
-      expect(response).to redirect_to(user_path(user))
-      expect(response.status).not_to eq(200)
-      expect(flash[:alert]).to be
+        expect(game.finished?).to be true
+        expect(game.current_level).to be 0
+        expect(response).to redirect_to(user_path(user))
+        expect(response.status).not_to eq(200)
+        expect(flash[:alert]).to be
+      end
     end
 
     it 'uses audience help' do

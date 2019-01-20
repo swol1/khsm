@@ -146,7 +146,7 @@ RSpec.describe GamesController, type: :controller do
     context 'answers wrong' do
       it 'regular question' do
         put :answer, id: game_w_questions.id, letter: game_w_questions.answer_current_question!(:a)
-        game = assigns(:game)
+        game = assigns(:game_question)
 
         expect(game.finished?).to be true
         expect(game.current_level).to be 0

@@ -31,7 +31,7 @@ RSpec.describe 'users/show', type: :view do
 
       it 'renders game partial' do
         assign(:games, FactoryBot.build_stubbed(:game, id: 1))
-        stub_template "users/_game.html.erb" => "<%= game.id %>"
+        stub_template "users/_game.html.erb" => "# <%= game.id %>"
         render
 
         expect(rendered).to match /1/

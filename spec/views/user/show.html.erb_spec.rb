@@ -22,19 +22,18 @@ RSpec.describe 'users/show', type: :view do
     context 'not current user' do
       before(:each) do
         assign(:user, FactoryBot.build_stubbed(:user, name: 'Ilya'))
-        render
       end
 
       it 'doesnt render change password' do
+        render
         expect(rendered).not_to match 'Сменить имя и пароль'
       end
 
       it 'renders game partial' do
-        assign(:games, FactoryBot.build_stubbed(:game, id: 1))
-        stub_template "users/_game.html.erb" => "# <%= game.id %>"
+        stub_template 'users/_game.html.erb' => "User game goes here"
         render
 
-        expect(rendered).to match /1/
+        expect(rendered).to have_content "User game goes here"
       end
     end
   end

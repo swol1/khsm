@@ -45,6 +45,5 @@ RSpec.feature 'USER creates game', type: :feature do
     # save_and_open_page
     # но в конечном коде (который вы кладете в репозиторий)
     # этого кода быть не должно, также, как и byebug
-    save_and_open_page
   end
 end

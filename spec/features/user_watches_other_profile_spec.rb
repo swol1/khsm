@@ -12,9 +12,8 @@ RSpec.feature 'USER watches profile', type: :feature do
     ]
   end
 
-  let(:current_user) { FactoryBot.create :user, name: 'Denis' }
-  let(:other_user) { FactoryBot.create :user, id: 9, name: 'Vova', games: user_games }
-  let!(:users) { [current_user, other_user] }
+  let(:current_user) { FactoryBot.create(:user, name: 'Denis') }
+  let!(:other_user) { FactoryBot.create(:user, id: 9, name: 'Vova', games: user_games) }
 
   before(:each) do
     login_as current_user
@@ -28,10 +27,7 @@ RSpec.feature 'USER watches profile', type: :feature do
     expect(page).to have_current_path '/users/9'
 
     expect(page).to have_content 'Denis'
-    expect(page).to have_content '11'
     expect(page).to have_content '177'
-    expect(page).to have_content '7'
-    expect(page).to have_content '12'
     expect(page).to have_content '50/50'
     expect(page).to have_content '01 янв., 15:00'
     expect(page).to have_content '12 дек., 03:00'

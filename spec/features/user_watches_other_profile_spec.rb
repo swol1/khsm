@@ -27,14 +27,8 @@ RSpec.feature 'USER watches profile', type: :feature do
     expect(page).to have_current_path '/users/9'
 
     expect(page).to have_content 'Denis'
-    expect(page).to have_content '177'
-    expect(page).to have_content '50/50'
-    expect(page).to have_content '01 янв., 15:00'
-    expect(page).to have_content '12 дек., 03:00'
-    expect(page).to have_content '1 000'
-    expect(page).to have_content '32 000'
-    expect(page).to have_content 'в процессе'
-    expect(page).to have_content 'проигрыш'
+    expect(page).to have_content '11 проигрыш 01 янв., 15:00 7 1 000 ₽ 50/50'
+    expect(page).to have_content '177 в процессе 12 дек., 03:00 12 32 000 ₽ 50/50'
     expect(page).not_to have_content 'Сменить имя и пароль'
   end
 

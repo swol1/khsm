@@ -16,9 +16,6 @@ gem 'rails', '~> 4.2.6'
 
 gem 'uglifier', '>= 1.3.0'
 
-
-
-
 group :development, :test do
   gem 'sqlite3'
   gem 'byebug'
@@ -33,8 +30,6 @@ group :test do
 end
 
 group :production do
-  # гем, улучшающий вывод логов на Heroku
-  # https://devcenter.heroku.com/articles/getting-started-with-rails4#heroku-gems
   gem 'rails_12factor'
   gem 'pg'
 end

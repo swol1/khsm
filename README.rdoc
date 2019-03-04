@@ -22,7 +22,9 @@ http://daimillion.herokuapp.com
  
  `bundle install` (у Вас должен быть установлен bundler)  
  
+ 
  `rake db:migrate`
+ 
  
  `rails s`
   

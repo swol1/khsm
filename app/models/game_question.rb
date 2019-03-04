@@ -1,4 +1,3 @@
-# (c) goodprogrammer.ru
 require 'game_help_generator'
 
 # Игровой вопрос — модель, которая связывает игру и вопрос. При создании новой
@@ -50,6 +49,17 @@ class GameQuestion < ActiveRecord::Base
 
   def correct_answer
     variants[correct_answer_key]
+  end
+
+  def apply_help!(help_type)
+    case help_type.to_sym
+    when :fifty_fifty
+      add_fifty_fifty
+    when :audience_help
+      add_audience_help
+    when :friend_call
+      add_friend_call
+    end
   end
 
   # Добавляем в help_hash по ключю fifty_fifty — массив из двух вариантов:

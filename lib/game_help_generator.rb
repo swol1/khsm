@@ -1,5 +1,3 @@
-#  (c) goodprogrammer.ru
-#
 # Класс, генерирующий подсказки по игре для поля GameQuestion#help_hash
 class GameHelpGenerator
   # Сколько всего виртуальных зрителей в игре (в процентах получается)
@@ -24,8 +22,6 @@ class GameHelpGenerator
     result_array.map! { |v| TOTAL_WATCHERS * v / sum }
 
     # Возвращаем хэш, собранный из массива ключей и значений
-    #
-    # См. документацию на метод Array#zip
     Hash[keys.zip(result_array)]
   end
 
@@ -36,8 +32,6 @@ class GameHelpGenerator
     key = (rand(10) > 2) ? correct_key : keys.sample
 
     # Генерируем подсказку от друга, используя файл локали
-    #
-    # См. config/locales.ru.yml
     I18n.t(
       'game_help.friend_call', variant: key.upcase,
       name: I18n.t('game_help.friends').sample

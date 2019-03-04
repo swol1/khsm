@@ -1,9 +1,3 @@
-# (c) goodprogrammer.ru
-#
-# Админский контроллер, только для наполнения базы вопросов с помощью файлов
-# определенного формата
-# Создает новую игру, обновляет статус игры по ответам юзера, выдает подсказки
-#
 class QuestionsController < ApplicationController
   # проверяем залогинен ли юзер
   before_action :authenticate_user!
@@ -22,8 +16,6 @@ class QuestionsController < ApplicationController
     level = params[:questions_level].to_i
     q_file = params[:questions_file]
 
-    # читаем содержимое файла в массив
-    # http://stackoverflow.com/questions/2521053/how-to-read-a-user-uploaded-file-without-saving-it-to-the-database
     if q_file.respond_to?(:readlines)
       file_lines = q_file.readlines
     elsif q_file.respond_to?(:path)
@@ -52,9 +44,6 @@ class QuestionsController < ApplicationController
     redirect_to root_path unless current_user.is_admin
   end
 
-  # Загрузка массива вопросов в базе
-  # Для скорости оборачиваем все в одну транзакцию
-  # см. https://www.coffeepowered.net/2009/01/23/mass-inserting-data-in-rails-without-killing-your-performance/
   def create_questions_from_lines(lines, level)
     failed = 0
     ActiveRecord::Base.transaction do

@@ -1,7 +1,3 @@
-#  (c) goodprogrammer.ru
-#
-# Вопрос — основная смысловая единица базы вопросов. Из вопросов разных уровней
-# сложности формируются все игры.
 class Question < ActiveRecord::Base
   QUESTION_LEVELS = (0..14).freeze
 

@@ -17,6 +17,8 @@ http://daimillion.herokuapp.com
 
 * [shoulda-matchers](https://github.com/thoughtbot/shoulda-matchers)
 
+* [Capybara](https://github.com/teamcapybara/capybara)
+
 
 ## Установка
 
